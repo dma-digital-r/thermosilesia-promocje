@@ -1,0 +1,815 @@
+/* ============================================================================
+   PANEL PROMOCJI DLA INSTALATORÓW — THERMOSILESIA
+   Stylizacja pod ekran dotykowy 15,6" (kiosk), tryb pełnoekranowy.
+   ============================================================================ */
+
+@font-face {
+  font-family: 'system-stack';
+}
+
+:root {
+  --header-h: 110px;
+  --footer-h: 208px;
+  --ease: cubic-bezier(.22, .9, .24, 1);
+  --white: #ffffff;
+  --ink: #12151b;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+  background: #05070a;
+  color: #fff;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  font-size: clamp(14px, 0.85vw + 0.4vh, 19px);
+}
+
+img { -webkit-user-drag: none; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+#app {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ============================================================ HEADER ============================================================ */
+
+.topbar {
+  flex: 0 0 var(--header-h);
+  background: #ffffff;
+  color: #14171c;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.4rem;
+  box-shadow: 0 2px 22px rgba(0, 0, 0, .07);
+  z-index: 50;
+  position: relative;
+}
+
+.brand-current {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+/* Logo Rotenso na pełną wysokość topbara (bez białego marginesu u góry
+   i u dołu) — pasek z czerwonym tłem logo sięga od krawędzi do krawędzi. */
+.brand-logo {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  transition: opacity .3s var(--ease);
+}
+.brand-logo img { height: 100%; width: auto; display: block; }
+.brand-logo .svg-logo { height: 100%; width: var(--header-h); display: block; }
+
+/* Logo dystrybutora (Thermosilesia) potrzebuje odsadzenia od góry/dołu —
+   box-sizing: border-box, żeby padding "zjadał" wysokość zamiast wychodzić
+   poza pasek nagłówka. */
+.brand-logo img.logo-thermosilesia { box-sizing: border-box; padding: 20px 0; }
+.brand-logo .svg-logo svg { width: 100%; height: 100%; }
+
+.brand-meta { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-name { font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand-tagline { font-size: .72rem; text-transform: uppercase; letter-spacing: .09em; color: #8a8f98; font-weight: 600; }
+
+.month-tag {
+  padding-left: 1.1rem;
+  border-left: 1px solid #e5e7eb;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #6b7280;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+
+.topbar-center { flex: 1 1 auto; display: flex; justify-content: center; }
+
+/* ---- prognoza pogody (7 dni), istotna dla montaży klimatyzacji ---- */
+
+.weather-strip { display: flex; align-items: center; gap: .25rem; }
+.weather-loc {
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: #9a9fa8;
+  padding-right: .7rem;
+  margin-right: .25rem;
+  border-right: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.weather-loading, .weather-error {
+  font-size: .9rem;
+  font-weight: 600;
+  color: #9a9fa8;
+}
+
+.weather-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+  padding: .35rem .45rem;
+  border-radius: 10px;
+  min-width: 0;
+  transition: background .3s var(--ease);
+}
+.weather-day.is-today { background: #f1f2f5; }
+
+.weather-day .wd-label {
+  font-size: .74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: #9a9fa8;
+}
+.weather-day.is-today .wd-label { color: #52565e; }
+
+.weather-day .wd-icon { width: 32px; height: 32px; margin: .15rem 0; }
+.weather-day .wd-icon svg { width: 100%; height: 100%; display: block; }
+
+.weather-day .wd-temp { font-size: 1.02rem; font-weight: 800; color: #14171c; white-space: nowrap; }
+
+.topbar-right { display: flex; align-items: center; gap: 1.6rem; }
+
+.clock-wrap { text-align: right; line-height: 1.1; }
+.clock { display: block; font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; color: #14171c; }
+.clock-date { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: #9a9fa8; font-weight: 600; }
+
+.brand-switch { display: flex; gap: .6rem; }
+.brand-pill {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .65rem 1.15rem .65rem .7rem;
+  border-radius: 5px;
+  border: 1.5px solid #dfe1e5;
+  background: transparent;
+  font-weight: 700;
+  font-size: .84rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #52565e;
+  transition: all .3s var(--ease);
+}
+.brand-pill .pill-icon { width: 1.5rem; height: 1.5rem; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; flex: 0 0 auto; }
+.brand-pill .pill-icon img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
+.brand-pill .pill-icon svg { width: 100%; height: 100%; }
+.brand-pill.active { background: var(--pill-color, #14171c); border-color: var(--pill-color, #14171c); color: #fff; box-shadow: 0 8px 18px -6px var(--pill-color, #14171c); }
+.brand-pill:active { transform: scale(.95); }
+
+/* ============================================================ STAGE ============================================================ */
+
+.stage {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.15s var(--ease);
+  background-size: cover;
+}
+.bg-layer.active { opacity: 1; }
+
+.bg-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 70% at 78% 38%, transparent 35%, rgba(0,0,0,.3) 100%),
+    linear-gradient(0deg, rgba(0,0,0,.3) 0%, transparent 30%);
+}
+
+/* Ciemniejsze przyciemnienie dołu i lewej strony sceny, na którym zawsze
+   spoczywa blok tekstowy — niezależnie od koloru/jasności tła kategorii. */
+.bg-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(0deg, rgba(2, 3, 5, .8) 0%, rgba(2, 3, 5, .26) 18%, rgba(2, 3, 5, .05) 36%, transparent 50%),
+    linear-gradient(100deg, rgba(2, 3, 5, .8) 0%, rgba(2, 3, 5, .1) 28%, transparent 46%);
+}
+
+.bg-particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: .35;
+  mix-blend-mode: screen;
+  animation: drift linear infinite;
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(4vw, -3vh) scale(1.08); }
+  66%  { transform: translate(-3vw, 3vh) scale(.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* ============================================================ HERO ============================================================ */
+
+.hero {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(56%, 800px);
+  padding: 0 clamp(1.6rem, 4vw, 4.5rem);
+  animation: cardIn .7s var(--ease) both;
+}
+
+.hero-content.swap { animation: cardSwap .55s var(--ease) both; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardSwap {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow-row { display: flex; align-items: center; gap: .8rem; margin-bottom: .7rem; flex-wrap: wrap; }
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: .32rem .85rem;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .3);
+  font-weight: 700;
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 3.4vw + 1.8vh, 5.2rem);
+  font-weight: 800;
+  line-height: 1;
+  margin: 0 0 .7rem;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+/* Dłuższe nazwy promocji (np. pakiety premium) dostają mniejszą skalę,
+   żeby tytuł nie wychodził poza obszar hero na niższych ekranach. */
+.hero-title.title-md { font-size: clamp(1.7rem, 2.8vw + 1.5vh, 3.8rem); }
+.hero-title.title-sm { font-size: clamp(1.4rem, 2.2vw + 1.3vh, 2.9rem); }
+
+.hero-tagline {
+  font-size: clamp(.95rem, 1.05vw, 1.15rem);
+  line-height: 1.5;
+  opacity: .82;
+  margin: 0 0 1.3rem;
+  max-width: 52ch;
+}
+
+.hero-badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.4rem; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .38rem .8rem;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 3px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+.badge svg { width: 1rem; height: 1rem; }
+
+/* ---- blok cenowy dwukolumnowy, jak w referencji CUPRA ---- */
+
+.hero-price-row { display: flex; align-items: stretch; gap: clamp(1.4rem, 2.6vw, 2.6rem); margin-bottom: 1.6rem; }
+.price-col { display: flex; flex-direction: column; gap: .35rem; }
+.price-col-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; opacity: .65; font-weight: 700; margin: 0; }
+.price-value-row { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+.price-prefix { font-size: .95rem; font-weight: 600; opacity: .85; }
+.price-value { display: flex; align-items: baseline; gap: .4rem; font-weight: 800; font-size: clamp(1.9rem, 3vw, 2.9rem); line-height: 1; }
+.price-value--small { font-size: clamp(1.3rem, 1.8vw, 1.7rem); font-weight: 800; }
+.price-suffix { font-size: 1rem; font-weight: 700; opacity: .85; }
+.price-col-caption { font-size: .76rem; opacity: .55; margin: 0; }
+.price-divider { font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 200; opacity: .3; line-height: 1; align-self: center; }
+
+.hero-actions { display: flex; align-items: center; gap: 1.2rem; }
+
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .9rem 1.7rem;
+  background: transparent;
+  color: #fff;
+  font-weight: 700;
+  font-size: .88rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border: 1.5px solid rgba(255, 255, 255, .85);
+  border-radius: 4px;
+  transition: all .25s var(--ease);
+}
+.btn-hero svg { width: 1.05rem; height: 1.05rem; transition: transform .25s var(--ease); }
+.btn-hero:active { transform: scale(.95); background: rgba(255, 255, 255, .15); }
+.btn-hero:hover { background: rgba(255, 255, 255, .1); }
+.btn-hero:hover svg { transform: translateX(3px); }
+
+/* ---- wizualizacja produktu: pełnoekranowy motyw w tle, za tekstem ---- */
+
+.hero-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: clamp(2vw, 7vw, 9vw);
+  pointer-events: none;
+}
+
+.visual-glow {
+  position: absolute;
+  right: 6vw;
+  width: min(56vw, 900px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow, #fff) 0%, transparent 68%);
+  filter: blur(20px);
+  opacity: .4;
+  animation: pulseGlow 6.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: .32; }
+  50%      { transform: scale(1.08); opacity: .46; }
+}
+
+/* Ramka na zdjęcie produktu — dopóki handlowiec nie poda adresu URL
+   zdjęcia w danych promocji, w środku wyświetla się ikona jako
+   tymczasowy placeholder na jasnym tle. Zdjęcia produktowe Rotenso mają
+   białe tło i różne proporcje — ramka jest więc biała (żeby zlewała się
+   z tłem zdjęcia) i domyślnie prostokątna (3:2), a po wczytaniu zdjęcia
+   (.has-photo) dopasowuje swój kształt do naturalnych proporcji obrazka
+   zamiast go kadrować lub rozciągać. */
+.visual-frame {
+  position: relative;
+  width: min(38vw, 800px);
+  aspect-ratio: 3 / 2;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 35px 70px -22px rgba(0, 0, 0, .55), 0 10px 24px -10px rgba(0, 0, 0, .3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(1.1rem, 2.2vw, 2.2rem);
+  animation: floatY 6s ease-in-out infinite;
+}
+
+/* Zdjęcia promocji pochodzą z tego samego, jednorodnego źródła (kafle
+   z landing page) i mają w praktyce ten sam rozmiar/ratio, więc nie trzeba
+   już dopasowywać ramki do każdego zdjęcia z osobna — po prostu wyświetlamy
+   je w stałej szerokości 800px, a wysokość wynika naturalnie ze zdjęcia. */
+.visual-frame.has-photo {
+  width: 800px;
+  aspect-ratio: auto;
+  height: auto;
+  padding: 0;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+.visual-frame.swap { animation: frameSwap .65s var(--ease); }
+@keyframes frameSwap {
+  0%   { opacity: 0; transform: translateY(24px) scale(.94); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Narożne akcenty — subtelny motyw "kadru fotograficznego" (ciemne, żeby
+   było je widać na białym tle ramki) */
+.frame-corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid rgba(20, 23, 28, .3);
+  pointer-events: none;
+  z-index: 1;
+}
+.frame-corner.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-top-left-radius: 6px; }
+.frame-corner.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-top-right-radius: 6px; }
+.frame-corner.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-bottom-left-radius: 6px; }
+.frame-corner.br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-bottom-right-radius: 6px; }
+
+.visual-icon {
+  position: relative;
+  width: 54%;
+  height: 54%;
+  color: #c3c8cf;
+  opacity: 1;
+}
+.visual-icon svg { width: 100%; height: 100%; }
+
+.visual-photo {
+  position: relative;
+  display: none;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* ============================================================ BRAND / LOGO CHIPS ============================================================ */
+
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: .4rem .7rem;
+  box-shadow: 0 10px 22px -8px rgba(0, 0, 0, .35);
+}
+.text-logo { font-weight: 800; color: #22262d; letter-spacing: -.02em; }
+
+.hero-brandchip { display: flex; align-items: center; }
+
+/* ============================================================ PROMO RAIL / FOOTER ============================================================ */
+
+.promo-rail {
+  flex: 0 0 auto;
+  background: rgba(6, 8, 11, .78);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  padding: .85rem 1.6rem 1.05rem;
+  position: relative;
+  z-index: 10;
+}
+
+.filter-row {
+  display: flex;
+  gap: .55rem;
+  overflow-x: auto;
+  padding-bottom: .65rem;
+  scrollbar-width: none;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex: 0 0 auto;
+  padding: .9rem 1.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .88);
+  font-size: 1.05rem;
+  font-weight: 700;
+  transition: all .25s var(--ease);
+}
+
+/* Kolor tła nieaktywnego filtra rozpoznawalny po grupie promocji. */
+.filter-chip[data-group="klimatyzacje"] { background: #2f6fd1; border-color: #2f6fd1; color: #fff; }
+.filter-chip[data-group="pompy"] { background: #dd5a2e; border-color: #dd5a2e; color: #fff; }
+.filter-chip[data-group="pakiety"] { background: #7a4fb0; border-color: #7a4fb0; color: #fff; }
+.filter-chip[data-group="akcesoria"] { background: #2f9e7a; border-color: #2f9e7a; color: #fff; }
+
+.filter-chip.active { background: #fff; color: #14171c; border-color: #fff; }
+.filter-chip:active { transform: scale(.94); }
+
+.promo-row { display: flex; align-items: center; gap: .7rem; }
+
+.promo-nav {
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .28);
+  color: rgba(255, 255, 255, .8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s var(--ease);
+}
+.promo-nav svg { width: 1.05rem; height: 1.05rem; }
+.promo-nav:active { transform: scale(.88); background: rgba(255, 255, 255, .14); }
+
+.promo-track-wrap {
+  flex: 1 1 auto;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.promo-track-wrap::-webkit-scrollbar { display: none; }
+
+.promo-track { display: flex; gap: 1.1rem; padding: .35rem .15rem; }
+
+/* Kafle promocji w stylu karty-miniatury: prostokąt „obrazu" (ikona
+   produktu lub zdjęcie na tinted/białym tle) + podpis pod spodem. */
+.promo-tile {
+  --glow: #ffffff;
+  flex: 0 0 auto;
+  width: 220px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  transition: transform .3s var(--ease);
+  position: relative;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+.promo-tile .tile-image {
+  width: 100%;
+  height: 130px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .09);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.promo-tile .tile-icon { width: 46px; height: 46px; color: var(--glow); opacity: .9; }
+
+/* Miniatura ze zdjęciem promocji (białe tło produktowe Rotenso) zamiast
+   rysunkowej ikony — ta sama logika co w dużej ramce hero. */
+.promo-tile .tile-photo { display: none; width: 100%; height: 100%; object-fit: contain; padding: 0px; }
+.promo-tile .tile-image.has-photo { background: #fff; border-color: rgba(255, 255, 255, .5); }
+.promo-tile .tile-image.has-photo .tile-photo { display: block; }
+.promo-tile .tile-image.has-photo .tile-icon { display: none; }
+
+.promo-tile .tile-label { display: block; width: 100%; }
+.promo-tile .tile-name { display: block; font-size: 1.2rem; font-weight: 700; line-height: 1.25; opacity: .78; transition: opacity .3s var(--ease); }
+
+.promo-tile.active .tile-image {
+  background: linear-gradient(160deg, var(--glow-a, rgba(255,255,255,.2)), rgba(255,255,255,.06));
+  border-color: var(--glow);
+  box-shadow: 0 14px 26px -12px rgba(0, 0, 0, .55), 0 0 0 2px var(--glow-a2, rgba(255,255,255,.25));
+}
+.promo-tile.active .tile-image.has-photo { background: #fff; }
+.promo-tile.active .tile-icon { opacity: 1; }
+.promo-tile.active .tile-name { opacity: 1; }
+.promo-tile:active { transform: scale(.95); }
+
+/* ============================================================ MODAL ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 4, 6, .58);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s var(--ease);
+  z-index: 200;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+.modal-sheet {
+  width: min(1200px, 95vw);
+  height: 89vh;
+  background: linear-gradient(165deg, #14171f 0%, #1b1f28 100%);
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-bottom: none;
+  border-radius: 30px 30px 0 0;
+  padding: 1.6rem clamp(1.4rem, 3vw, 2.8rem) 1.4rem;
+  position: relative;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(4%);
+  transition: transform .5s var(--ease);
+  box-shadow: 0 -40px 90px rgba(0, 0, 0, .55);
+}
+.modal-overlay.open .modal-sheet { transform: translateY(0); }
+
+.modal-grip { width: 48px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .22); margin: 0 auto 1rem; flex: 0 0 auto; }
+
+.modal-close {
+  position: absolute;
+  top: 1.3rem;
+  right: 1.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close svg { width: 1.15rem; height: 1.15rem; }
+.modal-close:active { transform: scale(.9); }
+
+.modal-header { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.3rem; flex: 0 0 auto; padding-right: 3rem; }
+.modal-header .m-icon { width: 3.4rem; height: 3.4rem; flex: 0 0 auto; opacity: .95; }
+.modal-header .m-icon svg { width: 100%; height: 100%; }
+.modal-header .m-titles h2 { font-size: clamp(1.25rem, 1.8vw, 1.7rem); margin: 0 0 .15rem; font-weight: 800; }
+.modal-header .m-sub { opacity: .68; font-size: .9rem; }
+
+.modal-body { flex: 1 1 auto; overflow-y: auto; padding-right: .5rem; }
+.modal-body::-webkit-scrollbar { width: 8px; }
+.modal-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .16); border-radius: 8px; }
+
+.m-note { font-size: 1rem; opacity: .85; margin: 0 0 1.1rem; padding: .9rem 1.1rem; background: rgba(255, 255, 255, .05); border-left: 3px solid rgba(255, 255, 255, .35); border-radius: 0 12px 12px 0; }
+.m-list { list-style: none; margin: 0 0 1.2rem; padding: 0; display: grid; gap: .55rem; }
+.m-list li { padding: .8rem 1rem; background: rgba(255, 255, 255, .045); border: 1px solid rgba(255, 255, 255, .08); border-radius: 12px; font-weight: 600; }
+.m-footnote { font-size: .8rem; opacity: .55; line-height: 1.55; margin-top: 1.2rem; }
+
+table.promo-table { width: 100%; border-collapse: collapse; font-size: .92rem; margin-bottom: .5rem; }
+.promo-table thead th {
+  position: sticky; top: 0;
+  text-align: left;
+  padding: .8rem 1rem;
+  background: #1b1f28;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  opacity: .65;
+  z-index: 1;
+}
+.promo-table tbody td { padding: .85rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, .07); }
+.promo-table tbody tr:hover td { background: rgba(255, 255, 255, .035); }
+.promo-table .price-cell { font-weight: 800; white-space: nowrap; }
+.promo-table .old-price { text-decoration: line-through; opacity: .5; margin-right: .5rem; font-weight: 500; }
+
+.table-scroll { overflow-x: auto; border-radius: 16px; border: 1px solid rgba(255, 255, 255, .08); }
+
+.search-row { display: flex; gap: .6rem; margin-bottom: .9rem; flex-wrap: wrap; align-items: center; }
+.search-box {
+  flex: 1 1 220px;
+  padding: .75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, .05);
+  color: #fff;
+  font-size: .95rem;
+}
+.search-box::placeholder { color: rgba(255, 255, 255, .4); }
+.result-count { font-size: .8rem; opacity: .55; white-space: nowrap; }
+
+/* ---- pakiety premium ---- */
+
+.bundle-grid { display: flex; flex-wrap: wrap; gap: 1.6rem; margin-bottom: 1.6rem; }
+
+.bundle-main {
+  flex: 1 1 320px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 20px;
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+.bundle-main .b-icon { width: 3.2rem; height: 3.2rem; flex: 0 0 auto; }
+.bundle-main .b-icon svg { width: 100%; height: 100%; }
+.bundle-main .b-name { font-weight: 800; font-size: 1.05rem; margin-bottom: .3rem; }
+.bundle-main .b-code { font-size: .8rem; opacity: .55; font-family: 'Consolas', monospace; }
+
+.variant-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.6rem; }
+.variant-card {
+  flex: 1 1 220px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 18px;
+  padding: 1.3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.variant-card .v-label { font-weight: 700; opacity: .75; font-size: .88rem; margin-bottom: .2rem; }
+.variant-card .v-old { text-decoration: line-through; opacity: .5; font-size: 1rem; }
+.variant-card .v-new { font-size: clamp(1.6rem, 2.4vw, 2.1rem); font-weight: 800; }
+.variant-card .v-save { align-self: flex-start; margin-top: .3rem; background: rgba(90, 220, 140, .16); color: #7cf29b; padding: .3rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 800; }
+
+.acc-title { font-weight: 800; font-size: 1rem; margin: 0 0 .8rem; opacity: .85; }
+.acc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .75rem; }
+.acc-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 14px;
+  padding: .8rem .95rem;
+}
+.acc-item .a-name { font-weight: 700; font-size: .86rem; line-height: 1.25; margin-bottom: .15rem; }
+.acc-item .a-code { font-size: .74rem; opacity: .5; font-family: 'Consolas', monospace; }
+.acc-item .brand-chip { flex: 0 0 auto; padding: .3rem .5rem; }
+.acc-item .brand-chip img, .acc-item .brand-chip .svg-logo { height: 16px !important; }
+
+/* ============================================================ TOUCH FX ============================================================ */
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .45);
+  transform: scale(0);
+  animation: rippleFx .6s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes rippleFx {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ============================================================ IDLE / ATTRACT BADGE ============================================================ */
+
+.idle-badge {
+  position: absolute;
+  top: calc(var(--header-h) + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all .4s var(--ease);
+  background: rgba(0, 0, 0, .5);
+  border: 1px solid rgba(255, 255, 255, .15);
+  padding: .5rem 1rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  z-index: 15;
+}
+.idle-badge.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.idle-dot { width: 8px; height: 8px; border-radius: 50%; background: #6cf27c; animation: idlePulse 1.6s ease-in-out infinite; }
+@keyframes idlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 242, 124, .5); }
+  50%      { box-shadow: 0 0 0 6px rgba(108, 242, 124, 0); }
+}
+
+/* ============================================================ RESPONSIVE TWEAKS ============================================================ */
+
+@media (max-aspect-ratio: 4/3) {
+  .hero-content { width: min(94%, 640px); }
+  .hero-visual { justify-content: center; padding-right: 0; opacity: .5; }
+}
+
+@media (max-height: 820px) {
+  :root { --header-h: 76px; }
+  .hero-content { padding-bottom: 1.1rem; padding-top: 1rem; }
+  .hero-tagline { margin-bottom: .8rem; max-width: 60ch; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .hero-badges { margin-bottom: .8rem; }
+  .hero-price-row { margin-bottom: 1rem; }
+  .hero-eyebrow-row { margin-bottom: .5rem; }
+}
+
+@media (max-height: 720px) {
+  .hero-title { font-size: clamp(1.8rem, 3vw + 1.2vh, 3rem); }
+  .hero-title.title-md { font-size: clamp(1.5rem, 2.4vw + 1vh, 2.4rem); }
+  .hero-title.title-sm { font-size: clamp(1.3rem, 2vw + .9vh, 2rem); }
+}
