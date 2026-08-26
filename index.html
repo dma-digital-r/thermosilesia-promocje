@@ -86,16 +86,51 @@
           </div>
         </div>
 
-        <div class="hero-actions">
-          <button class="btn-hero" id="btnDetails">
-            <span>Zobacz szczegóły</span>
-            <svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <span class="hero-brandchip" id="heroBrandChip"></span>
-        </div>
+        <div>
+    <div>
+      <!-- Główna ramka z ograniczeniem wysokości i przewijaniem -->
+      <div class="hero-actions" style="
+        width: 100%; 
+        max-width: 600px; 
+        max-height: 80vh; 
+        overflow-y: auto; 
+        border: 2px solid #333; 
+        border-radius: 12px; 
+        padding: 20px; 
+        box-sizing: border-box; 
+        display: flex; 
+        flex-direction: column; 
+        gap: 12px;
+      ">
+        <!-- Przycisk rozciągnięty na całą ramkę z większym tekstem -->
+        <button class="btn-hero" id="btnDetails" style="
+          width: 100%; 
+          padding: 16px 20px; 
+          font-size: 1.25rem; 
+          font-weight: bold; 
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          gap: 10px; 
+          box-sizing: border-box; 
+          cursor: pointer;
+        ">
+          <span>Zobacz szczegóły</span>
+          <svg viewBox="0 0 24 24" fill="none" style="width: 24px; height: 24px; flex-shrink: 0;">
+            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        
+        <span class="hero-brandchip" id="heroBrandChip" style="
+          width: 100%; 
+          font-size: 1.1rem; 
+          box-sizing: border-box; 
+          display: block;
+        "></span>
       </div>
     </div>
-  </main>
+  </div>
+</main>
 
   <!-- ============================================================ FOOTER / PROMO RAIL -->
   <footer class="promo-rail">
