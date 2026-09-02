@@ -6,11 +6,11 @@
    w katalogu głównym strony.
 
    Źródło danych (bieżąca edycja): ulotka "Thermosilesia - Ulotka
-   promocyjna - sierpień 2026 v3" (nr P/TS/P/PL/2026.08.17).
+   promocyjna - wrzesień 2026" (nr P/TS/P/PL/2026.09).
    ============================================================================ */
 
-const MONTH_LABEL = 'Sierpień 2026';
-const LEAFLET_REF = 'P/TS/P/PL/2026.08.17';
+const MONTH_LABEL = 'Wrzesień 2026';
+const LEAFLET_REF = 'P/TS/P/PL/2026.09';
 
 /* Lokalizacja, dla której panel pokazuje 7-dniową prognozę pogody w
    nagłówku (istotne przy planowaniu montaży klimatyzacji/pomp ciepła).
@@ -55,12 +55,78 @@ const ROTENSO_CATEGORIES = [
     priceValue: '1',
     priceSuffix: 'zł netto',
     brand: 'rotenso',
-    validity: '01.08.2026 – 31.08.2026 lub do wyczerpania stanów magazynowych',
+    validity: '01.09.2026 – 30.09.2026 lub do wyczerpania stanów magazynowych',
     detail: {
       type: 'simple-list',
       note: 'Dostępne modele w promocji: RO26Xi/Xo, RO35Xi/Xo, RO50Xi/Xo.',
       items: ['RO26Xi / RO26Xo', 'RO35Xi / RO35Xo', 'RO50Xi / RO50Xo'],
       footnote: 'Zamówienia prosimy składać u opiekunów handlowych.',
+    },
+  },
+  {
+    id: 'cleanairix-1zl',
+    group: 'klimatyzacje',
+    groupLabel: 'Klimatyzacje',
+    name: 'Cleanairix za 1 zł',
+    kicker: 'Promocja 2+1',
+    tagline: 'Kup 2 klimatyzatory Rotenso, koncentrat czyszczący Cleanairix dostajesz za symboliczną złotówkę',
+    description:
+      'Do wybranych modeli klimatyzatorów Rotenso (Teta Mirror, Elis Silver, Elis) dokładamy koncentrat czyszczący Cleanairix HI-Pro Evaporator 5 l za 1 zł netto — na każde 2 zakupione jednostki, miksuj dowolnie.',
+    icon: 'filter',
+    image: 'https://thermosilesia.pl/media/cache/view_landing_page_promotions_tile/assets/upload/cms/landing_page/a050907c-4486-42f4-859d-6701b166d3d2.jpg',
+    gradient: ['#0e6b6b', '#052e2e'],
+    glow: '#4dd9c9',
+    badges: [
+      { icon: 'shuffle', text: 'Miksuj dowolnie' },
+      { icon: 'tag', text: '2+1' },
+    ],
+    priceLabel: 'Koncentrat czyszczący Cleanairix za',
+    priceValue: '1',
+    priceSuffix: 'zł netto',
+    brand: 'rotenso',
+    validity: '01.09.2026 – 30.09.2026 lub do wyczerpania stanów magazynowych',
+    detail: {
+      type: 'simple-list',
+      note: 'Za każde 2 zakupione jednostki (miksuj dowolnie) — 1x koncentrat czyszczący Cleanairix HI-Pro Evaporator 5 l za 1 zł netto.',
+      items: [
+        'Rotenso Teta Mirror: TM26Xi/TO26Xo, TM35Xi/TO35Xo, TM50Xi/TO50Xo, TM70Xi/TO70Xo',
+        'Rotenso Elis Silver: ES26Xi/EO26Xo, ES35Xi/EO35Xo, ES50Xi/EO50Xo, ES70Xi/EO70Xo',
+        'Rotenso Elis: E26Xi/EO26Xo, E35Xi/EO35Xo, E50Xi/EO50Xo, E70Xi/EO70Xo',
+      ],
+      footnote: TERMS.standard,
+    },
+  },
+  {
+    id: 'cleanairix-3-2',
+    group: 'klimatyzacje',
+    groupLabel: 'Klimatyzacje',
+    name: 'Cleanairix 3+2',
+    kicker: 'Promocja 3+2',
+    tagline: 'Kup 3 klimatyzatory Rotenso, dwa koncentraty czyszczące Cleanairix za 2 zł',
+    description:
+      'Do wybranych modeli klimatyzatorów Rotenso (Teta Mirror, Elis Silver, Elis) dokładamy 2x koncentrat czyszczący Cleanairix HI-Pro Evaporator 5 l za 2 zł netto — na każde 3 zakupione jednostki, miksuj dowolnie.',
+    icon: 'filter',
+    image: 'https://thermosilesia.pl/media/cache/view_landing_page_promotions_tile/assets/upload/cms/landing_page/e8e467b8-2726-40a0-a0cd-a06f2f76c85e.jpg',
+    gradient: ['#0a4f6b', '#03222f'],
+    glow: '#3fbfe0',
+    badges: [
+      { icon: 'shuffle', text: 'Miksuj dowolnie' },
+      { icon: 'tag', text: '3+2' },
+    ],
+    priceLabel: '2x koncentrat czyszczący Cleanairix za',
+    priceValue: '2',
+    priceSuffix: 'zł netto',
+    brand: 'rotenso',
+    validity: '01.09.2026 – 30.09.2026 lub do wyczerpania stanów magazynowych',
+    detail: {
+      type: 'simple-list',
+      note: 'Za każde 3 zakupione jednostki (miksuj dowolnie) — 2x koncentrat czyszczący Cleanairix HI-Pro Evaporator 5 l za 2 zł netto.',
+      items: [
+        'Rotenso Teta Mirror: TM26Xi/TO26Xo, TM35Xi/TO35Xo, TM50Xi/TO50Xo, TM70Xi/TO70Xo',
+        'Rotenso Elis Silver: ES26Xi/EO26Xo, ES35Xi/EO35Xo, ES50Xi/EO50Xo, ES70Xi/EO70Xo',
+        'Rotenso Elis: E26Xi/EO26Xo, E35Xi/EO35Xo, E50Xi/EO50Xo, E70Xi/EO70Xo',
+      ],
+      footnote: TERMS.standard,
     },
   },
 
@@ -587,10 +653,10 @@ const ROTENSO_CATEGORIES = [
     priceValue: '75%',
     priceSuffix: 'taniej',
     brand: 'rotenso',
-    validity: '01.08.2026 – 31.08.2026 lub do wyczerpania stanów magazynowych',
+    validity: '01.09.2026 – 30.09.2026 lub do wyczerpania stanów magazynowych',
     detail: {
       type: 'pricetable',
-     columns: ['Kod produktu', 'Nazwa', 'Stara cena', 'Nowa cena netto'],
+      columns: ['Kod produktu', 'Nazwa', 'Stara cena', 'Nowa cena netto'],
       rows: [
         ['MD-NIM05/E(ZG)', 'Styk Dry Contact RDCX', '330,00 zł', '101,75 zł'],
         ['MODUŁ ZATO IMOTO', 'Moduł sterownika Zato X - Imoto R14', '54,45 zł', '13,75 zł'],
@@ -599,10 +665,10 @@ const ROTENSO_CATEGORIES = [
         ['SAVA CS HAHB', 'Sterownik Sava CS HAHB', '109,45 zł', '79,20 zł'],
         ['MODUŁ SAVA CS KPL', 'Moduł pracy grupowej Sava CS', '81,95 zł', '50,60 zł'],
         ['FILTR EPA FRESH', 'Filtr świeżego powietrza EPA Rotenso Fresh R15', '37,95 zł', '23,10 zł'],
-        ['MFBR IMOTO', 'Moduł multifunkcyjny MFBR IMOTO', '156,75 zł', '33,00 zł'],
+        ['MFBR IMOTO', 'Moduł multifunkcyjny MFBR IMOTO R14', '156,75 zł', '33,00 zł'],
         ['N26XI R14', 'Klimatyzator kanałowy Rotenso Nevo N26Xi R14 (jednostka wewnętrzna)', '906,95 zł', '200,75 zł'],
         ['T35VI R11', 'Klimatyzator kasetonowy Rotenso T35Vi R11 (jednostka wewnętrzna)', '650,00 zł', '200,75 zł'],
-        ['CCM-18A/N', 'Bramka BMS MODBUS 64', '8 525,00 zł', '7 700,00 zł'],
+        ['CCM-18A/N', 'Bramka BMS MODBUS 64', '8525,00 zł', '7700,00 zł'],
       ],
       footnote: TERMS.standard,
     },
@@ -627,7 +693,6 @@ const LG_ROWS_RAW = [
   ['AC09BK.UA3', 'KLIMATYZATOR LG ARTCOOL AC09BK.UA3 ZEW', '1 250 zł'],
   ['AC12BK.UA3', 'KLIMATYZATOR LG ARTCOOL AC12BK.UA3 ZEW', '1 400 zł'],
   ['AHCS100H0', 'LG CZUJNIK CO2 NAŚCIENNY AHCS100H0', '350 zł'],
-  ['DM07RK.NSJ', 'KLIMATYZATOR LG DELUXE MULTI DM07RK.NSJ WEW.JEDN', '500 zł'],
   ['FM41AH.U34', 'KLIMATYZATOR LG MULTI FDX FM41AH.U34 ZEW.JEDNOSTKA', '5 500 zł'],
   ['H09S1D.U12', 'KLIMATYZATOR LG SOFT AIR DELUXE H09S1D.U12 ZEW.', '990 zł'],
   ['HU143MA.U33', 'POMPA CIEPŁA LG THERMA V HU143MA.U33 ZEW SPLIT', '6 600 zł'],
@@ -641,7 +706,6 @@ const LG_ROWS_RAW = [
   ['PMBL5620', 'LG ROZGAŁĘŹNIK MULTI FDX PMBL5620', '300 zł'],
   ['PMUB111A', 'LG ROZGAŁĘŹNIK SYNCHRO PMUB111A', '300 zł'],
   ['PQCSZ250S0', 'LG PROSTY STEROWNIK CENTRALNY PQCSZ250S0', '1 500 zł'],
-  ['PQRCVCL0QW', 'LG STEROWNIK PRZEWODOWY PQRCVCL0QW', '150 zł'],
   ['PREMTB101', 'LG PREMTB101.ENCXCOM STEROWNIK PRZEWODOWY', '450 zł'],
   ['PTDCQ', 'LG OBUDOWA KASET PTDCQ', '400 zł'],
   ['PTEGM0', 'LG OPUSZCZANY FILTR KASET PTEGM0', '800 zł'],
@@ -657,11 +721,8 @@ const LG_ROWS_RAW = [
   ['UT48F.NA0', 'KLIMATYZATOR LG KASETONOWY UT48F.NA0 WEW', '3 000 zł'],
   ['UU70W.U34', 'KLIMATYZATOR LG UU70W.U34 ZEWNĘTRZNA JEDNOSTKA', '7 500 zł'],
   ['P09SND.NS0', 'KLIMATYZATOR LG P09SND.NS0 WEW.', '930 zł'],
-  ['EZ12CYU.CA31', 'KLIMATYZATOR LG EZ12CYU.CA31 ZEW.', '1 200 zł'],
-  ['AA18SP.U18', 'KLIMATYZATOR LG AA18SP.U18 ZEW.', '1 900 zł'],
   ['P12SND.U12A', 'KLIMATYZATOR LG P12SND.U12A ZEW.', '1 450 zł'],
   ['PREMTA211.ENCXCOM', 'LG PREMTA211 STEROWNIK PRZEWODOWY', '1 080 zł'],
-  ['EZ09CYN.CSJ1', 'KLIMATYZATOR LG EZ09CYN.CSJ1 (JEDNOSTKA WEWN.)', '500 zł'],
   ['EZ12CYN.CSJ1', 'KLIMATYZATOR LG EZ12CYN.CSJ1 (JEDNOSTKA WEWN.)', '500 zł'],
 ];
 
@@ -689,7 +750,7 @@ const LG_CATEGORIES = [
     priceValue: String(LG_ROWS.length),
     priceSuffix: 'produktów',
     brand: 'lg',
-    validity: '01.08.2026 – 31.08.2026 lub do wyczerpania stanów magazynowych',
+    validity: '01.09.2026 – 30.09.2026 lub do wyczerpania stanów magazynowych',
     detail: {
       type: 'pricetable-filtered',
       columns: ['Kod produktu', 'Nazwa', 'Cena promocyjna netto'],
