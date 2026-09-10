@@ -1,0 +1,40 @@
+name: Aktualizacja katalogu produktow
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-products:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repozytorium
+        uses: actions/checkout@v4
+
+      - name: Ustaw Pythona
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pobierz feed i zbuduj products.json
+        env:
+          THERMO_FEED_USER: ${{ secrets.THERMO_FEED_USER }}
+          THERMO_FEED_PASS: ${{ secrets.THERMO_FEED_PASS }}
+        run: |
+          python tools/build_products.py "https://xml.thermosilesia.pl/b2b/products/thermosilesia-b2b.xml"
+
+      - name: Publikuj zmiane, jesli katalog sie zmienil
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add js/products.json
+          if git diff --cached --quiet; then
+            echo "Katalog produktow bez zmian - nic do publikacji."
+          else
+            git commit -m "Automatyczna aktualizacja katalogu produktow ($(date -u +%Y-%m-%d))"
+            git push
+          fi

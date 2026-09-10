@@ -38,6 +38,9 @@ Co trafia do products.json (tylko potrzebne pola, nie caly feed):
     atrybutu, np. "Grzanie (A7/W35) \\ COP" -> group="Grzanie (A7/W35)",
     name="COP"), description (oczyszczony z HTML opis produktu -- niektore
     akcesoria maja parametry wpisane tylko tutaj, a nie w <attributes>).
+
+    Produkty z feeda bez stanu magazynowego (stock <= 0) sa calkowicie
+    pomijane -- na prosbe handlowcow nie trafiaja do katalogu wyszukiwarki.
 """
 
 import sys
@@ -135,6 +138,7 @@ def load_xml(source):
 def build_products(root):
     products = []
     skipped = 0
+    out_of_stock = 0
     for p in root.findall("product"):
         try:
             pid = text_of(p.find("id"))
@@ -160,6 +164,13 @@ def build_products(root):
                 stock = float(stock_raw) if stock_raw else 0
             except ValueError:
                 stock = 0
+
+            if stock <= 0:
+                # Produkty bez stanu magazynowego nie trafiaja do katalogu w
+                # ogole (na prosbe handlowcow) -- nie warto pokazywac czegos,
+                # czego i tak nie da sie teraz zamowic.
+                out_of_stock += 1
+                continue
 
             images = []
             gallery_el = p.find("gallery")
@@ -223,7 +234,7 @@ def build_products(root):
             skipped += 1
             print(f"  ! pominieto produkt (blad: {exc})")
 
-    return products, skipped
+    return products, skipped, out_of_stock
 
 
 def main():
@@ -237,7 +248,7 @@ def main():
     out_path = sys.argv[2] if len(sys.argv) > 2 else default_out
 
     root = load_xml(source)
-    products, skipped = build_products(root)
+    products, skipped, out_of_stock = build_products(root)
 
     with_specs = sum(1 for pr in products if pr["specs"])
     with_description = sum(1 for pr in products if pr["description"])
@@ -252,6 +263,7 @@ def main():
     print(f"  produktow zapisanych: {len(products)}")
     print(f"  produktow z parametrami: {with_specs}")
     print(f"  produktow z opisem: {with_description}")
+    print(f"  pominietych - brak stanu magazynowego (stock<=0): {out_of_stock}")
     print(f"  pominietych (brak id/nazwy lub blad): {skipped}")
     print(f"  rozmiar pliku: {size_kb:.1f} KB")
 

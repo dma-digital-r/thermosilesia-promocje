@@ -167,6 +167,12 @@ produkt nie ma ani parametrów, ani opisu, pojawia się komunikat „Brak
 szczegółowych parametrów dla tego produktu” — zdjęcie i cena i tak zawsze
 są widoczne.
 
+Produkty, które w feedzie mają zerowy stan magazynowy, **w ogóle nie
+trafiają do katalogu wyszukiwarki** (na prośbę handlowców — nie ma sensu
+pokazywać czegoś, czego i tak nie da się teraz zamówić). To dzieje się już
+na etapie generowania `products.json`, więc dotyczy też automatycznej
+codziennej aktualizacji opisanej niżej.
+
 **Skąd biorą się dane:** z feedu B2B Thermosilesii
 (`https://xml.thermosilesia.pl/b2b/products/thermosilesia-b2b.xml`), tego
 samego, którego używa też inny dział. Ponieważ ten plik XML jest bardzo
