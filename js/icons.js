@@ -179,4 +179,10 @@ const ICONS = {
   chevronRight: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   close: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>`,
   arrowUp: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  search: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2.2"/><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+  box: `<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60 14L104 34V86L60 106L16 86V34L60 14Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M16 34L60 54L104 34" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M60 54V106" stroke="currentColor" stroke-width="3"/>
+  </svg>`,
 };

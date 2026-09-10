@@ -152,7 +152,7 @@
     el.clock.textContent = `${hh}:${mm}`;
     const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
     const months = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
-    el.clockDate.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+    el.clockDate.innerHTML = `${days[now.getDay()]},<br>${now.getDate()}&nbsp;${months[now.getMonth()]}`;
   }
 
   /* -------------------------------------------------- particles -------------------------------------------------- */
@@ -726,6 +726,11 @@
     }, 1000);
   }
 
+  // Udostępnione na zewnątrz (js/products.js), żeby okno wyszukiwarki
+  // parametrów produktowych mogło korzystać z tego samego mechanizmu
+  // wstrzymywania trybu prezentacji co modal promocji.
+  window.KioskIdle = { pause: pauseIdleForModal, bump: bumpIdle };
+
   /* -------------------------------------------------- events -------------------------------------------------- */
 
   function wireGlobalInteractionReset() {
@@ -763,7 +768,7 @@
     el.promoPrev.innerHTML = ICONS.chevronLeft;
     el.promoNext.innerHTML = ICONS.chevronRight;
     el.modalClose.innerHTML = ICONS.close;
-    el.monthBadge.textContent = `Promocje — ${MONTH_LABEL}`;
+    el.monthBadge.innerHTML = `Promocje<br>${MONTH_LABEL}`;
 
     renderBrandSwitch();
     spawnParticles();
@@ -790,7 +795,7 @@
 
     wirePromoNav();
     wireModal();
-    wireRipple('.btn-hero, .promo-tile, .promo-nav, .filter-chip, .brand-pill, .modal-close');
+    wireRipple('.btn-hero, .promo-tile, .promo-nav, .filter-chip, .brand-pill, .modal-close, .btn-products, .product-card, .products-back, .products-close');
     wireGlobalInteractionReset();
     idleWatcher();
   }

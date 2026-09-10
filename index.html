@@ -16,7 +16,7 @@
   <header class="topbar">
     <div class="brand-current" id="brandCurrent">
       <span class="brand-logo" id="brandLogo"></span>
-      <span class="month-tag" id="monthBadge">Promocje — Sierpień 2026</span>
+      <span class="month-tag" id="monthBadge">Promocje<br>Sierpień 2026</span>
     </div>
 
     <div class="topbar-center">
@@ -26,6 +26,10 @@
     </div>
 
     <div class="topbar-right">
+      <button class="btn-products" id="btnProducts">
+        <span class="btn-products-icon"></span>
+        <span>Parametry produktowe</span>
+      </button>
       <div class="clock-wrap">
         <span class="clock" id="clock">--:--</span>
         <span class="clock-date" id="clockDate"></span>
@@ -87,23 +91,14 @@
         </div>
 
         <div class="hero-actions">
-
           <button class="btn-hero" id="btnDetails">
-
             <span>Zobacz szczegóły</span>
-
             <svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-
           </button>
-
           <span class="hero-brandchip" id="heroBrandChip"></span>
-
         </div>
-
       </div>
-
     </div>
-
   </main>
 
   <!-- ============================================================ FOOTER / PROMO RAIL -->
@@ -128,6 +123,25 @@
     </div>
   </div>
 
+  <!-- ============================================================ PRODUKTY / PARAMETRY -->
+  <div class="products-overlay" id="productsOverlay">
+    <div class="products-sheet" id="productsSheet">
+      <div class="products-topbar">
+        <button class="products-back" id="productsBack" aria-label="Wstecz" hidden></button>
+        <div class="products-search-wrap" id="productsSearchWrap">
+          <span class="products-search-icon"></span>
+          <input class="products-search-box" id="productsSearch" placeholder="Szukaj po nazwie, symbolu lub producencie…" autocomplete="off">
+        </div>
+        <span class="products-count" id="productsCount"></span>
+        <button class="products-close" id="productsClose" aria-label="Zamknij"></button>
+      </div>
+      <div class="products-body" id="productsBody">
+        <div class="products-grid" id="productsGrid"></div>
+        <div class="product-detail" id="productDetail" hidden></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ============================================================ ATTRACT / IDLE BADGE -->
   <div class="idle-badge" id="idleBadge">
     <span class="idle-dot"></span> Tryb prezentacji
@@ -139,5 +153,6 @@
 <script src="js/logos.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
+<script src="js/products.js"></script>
 </body>
 </html>

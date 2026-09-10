@@ -149,6 +149,71 @@ klimatyzacji/pomp ciepła.
   dwa elementy strony wymagające połączenia z internetem — cała reszta
   (ceny, tabele, karuzela) działa offline.
 
+## Parametry produktowe (wyszukiwarka katalogu)
+
+Obok karuzeli promocji panel ma drugą, niezależną funkcję: przycisk
+**„Parametry produktowe”** w prawym górnym rogu nagłówka. Otwiera on
+pełnoekranowe okno, w którym handlowiec może wyszukać dowolny produkt z
+katalogu (po nazwie, symbolu lub producencie) i zobaczyć jego zdjęcie
+packshotowe, cenę (brutto i netto), stan magazynowy oraz pełną tabelę
+parametrów technicznych pogrupowaną tak, jak są pogrupowane w feedzie (np.
+osobno „Grzanie (A7/W35)”, osobno wymiary, osobno dane elektryczne).
+
+Część drobnych akcesoriów nie ma parametrów wpisanych w ustrukturyzowanej
+formie w feedzie — dane techniczne (rozmiar, ilość w opakowaniu itp.) są
+wtedy tylko w opisie produktu. W takim przypadku panel automatycznie
+pokazuje sekcję **„Opis”** z tym tekstem zamiast tabeli. Dopiero gdy
+produkt nie ma ani parametrów, ani opisu, pojawia się komunikat „Brak
+szczegółowych parametrów dla tego produktu” — zdjęcie i cena i tak zawsze
+są widoczne.
+
+**Skąd biorą się dane:** z feedu B2B Thermosilesii
+(`https://xml.thermosilesia.pl/b2b/products/thermosilesia-b2b.xml`), tego
+samego, którego używa też inny dział. Ponieważ ten plik XML jest bardzo
+duży (ok. 12 MB, ~1900 produktów), strona **nie pobiera go bezpośrednio** —
+zamiast tego raz na jakiś czas trzeba go przetworzyć skryptem na lekki plik
+`js/products.json`, który dopiero trafia do repozytorium i faktycznie jest
+wczytywany przez panel.
+
+**To dzieje się już automatycznie.** W repozytorium jest workflow GitHub
+Actions (`.github/workflows/update-products.yml`), który **codziennie w
+nocy** (ok. 2:00–3:00 czasu polskiego) sam:
+1. loguje się do feeda danymi konta B2B zapisanymi jako zaszyfrowane
+   sekrety repozytorium (`THERMO_FEED_USER`, `THERMO_FEED_PASS` —
+   Settings → Secrets and variables → Actions),
+2. uruchamia `tools/build_products.py` i generuje świeży `js/products.json`,
+3. jeśli katalog faktycznie się zmienił, commituje i publikuje go
+   automatycznie — bez udziału człowieka i bez potrzeby tokenu GitHub
+   (workflow ma własne uprawnienia do zapisu w repo).
+
+Nie trzeba nic robić co miesiąc ani pilnować tego ręcznie. Jedyny moment,
+w którym trzeba interweniować, to gdy dane logowania do feeda się zmienią
+(np. IT zresetuje hasło) — wtedy workflow zacznie kończyć się błędem
+(widoczne w zakładce **Actions** repozytorium, czerwony ✕) i trzeba będzie
+zaktualizować sekrety `THERMO_FEED_USER`/`THERMO_FEED_PASS`.
+
+**Ręczne odświeżenie / test poza harmonogramem:**
+- Z poziomu GitHub: zakładka **Actions** → **Aktualizacja katalogu
+  produktow** → **Run workflow** — odpali ten sam proces natychmiast.
+- Lokalnie (do testów przed publikacją albo gdy nie ma dostępu do GitHub):
+
+  ```
+  python tools/build_products.py <adres-feeda-lub-sciezka-do-pliku-xml>
+  ```
+
+  Jeśli feed wymaga logowania, trzeba przed uruchomieniem ustawić dane
+  dostępowe w tej samej sesji terminala:
+
+  ```
+  $env:THERMO_FEED_USER = "..."
+  $env:THERMO_FEED_PASS = "..."
+  ```
+
+  Skrypt zapisze wynik do `js/products.json` w projekcie i wypisze
+  podsumowanie (ile produktów zapisał, ile ma parametry) — ten plik trzeba
+  wtedy ręcznie opublikować (commit/push), tak jak każdą inną zmianę w
+  repozytorium.
+
 ## Struktura projektu
 
 ```
@@ -159,7 +224,12 @@ Strona promocje/
 │   ├── data.js                – TREŚĆ PROMOCJI — TU EDYTUJESZ CO MIESIĄC
 │   ├── icons.js                – biblioteka ikon SVG (zmieniać tylko gdy potrzebna nowa ikona)
 │   ├── logos.js                – rejestr logotypów marek
-│   └── app.js                  – logika strony (karuzela, okno szczegółów, tryb prezentacji)
+│   ├── app.js                  – logika strony (karuzela, okno szczegółów, tryb prezentacji)
+│   ├── products.js             – logika wyszukiwarki „Parametry produktowe”
+│   └── products.json           – dane katalogu produktów (generowane przez tools/build_products.py)
+├── tools/build_products.py     – skrypt przetwarzający feed XML na products.json
+├── .github/workflows/
+│   └── update-products.yml     – codzienna automatyczna aktualizacja products.json
 ├── assets/logos/                – pliki graficzne logotypów
 └── INSTRUKCJA_AKTUALIZACJI.md   – ten plik
 ```
